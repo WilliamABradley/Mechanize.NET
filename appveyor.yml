@@ -11,6 +11,7 @@ nuget:
 skip_commits:
   files:
     - 'docs/**/*.*'  
+    - 'README.md'
     
 init:
 - ps: git config --global core.autocrlf true
