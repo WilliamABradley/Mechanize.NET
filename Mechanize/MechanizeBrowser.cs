@@ -12,13 +12,13 @@ namespace Mechanize
     /// <summary>
     /// The Mechanize Browser for .NET, used for Navigating Statefully, and collecting and manipulating forms.
     /// </summary>
-    public class WebBrowser : IDisposable
+    public class MechanizeBrowser : IDisposable
     {
         /// <summary>
-        /// Constructor for <see cref="WebBrowser"/>.
+        /// Constructor for <see cref="MechanizeBrowser"/>.
         /// </summary>
         /// <param name="Timeout">The Custom Timeout that the Client should wait for concluding that a page has failed to load.</param>
-        public WebBrowser(TimeSpan? Timeout = null)
+        public MechanizeBrowser(TimeSpan? Timeout = null)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Mechanize
         /// <returns>Navigated Web Page.</returns>
         public async Task<WebPage> NavigateAsync(WebPageRequestInfo Info)
         {
-            if (Info.UpdateHistory && CurrentPage != null) _History.Add(CurrentPage);
+            if (CurrentPage?.RequestInfo?.UpdateHistory == true) _History.Add(CurrentPage);
             CurrentPage = await WebPage.Create(this, Info);
             return CurrentPage;
         }
@@ -68,6 +68,7 @@ namespace Mechanize
                 {
                     CurrentPage = History.Last();
                     _History.Remove(CurrentPage);
+                    _ForwardHistory.Add(CurrentPage);
                 }
                 catch (InvalidOperationException)
                 {
@@ -91,6 +92,7 @@ namespace Mechanize
                 {
                     CurrentPage = ForwardHistory.Last();
                     _ForwardHistory.Remove(CurrentPage);
+                    _History.Add(CurrentPage);
                 }
                 catch (InvalidOperationException)
                 {

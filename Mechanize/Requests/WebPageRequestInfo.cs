@@ -23,12 +23,19 @@ namespace Mechanize.Requests
         /// Constructs a GET Request for a Web Page.
         /// </summary>
         /// <param name="Address">Address of the Web Page to GET</param>
-        /// <param name="UpdateHistory"></param>
-        /// <param name="Visit"></param>
+        /// <param name="UpdateHistory">Determines whether to add this Request to the Back/Forward stack.</param>
         public WebPageRequestInfo(Uri Address, bool UpdateHistory) : this(Address, Data: null, UpdateHistory: UpdateHistory)
         {
         }
 
+        /// <summary>
+        /// Constructs a GET Request for a Web Page.
+        /// </summary>
+        /// <param name="Address">Address of the Web Page to GET</param>
+        /// <param name="Data">The Data to Request this page with.</param>
+        /// <param name="Method">The HttpMethod that this Page will be requested with.</param>
+        /// <param name="EncodingType">The Encoding Type that this Page will be Requested with.</param>
+        /// <param name="UpdateHistory">Determines whether to add this Request to the Back/Forward stack.</param>
         public WebPageRequestInfo(Uri Address, List<KeyValuePair<string, IRequestInfo>> Data = null, string Method = "GET", string EncodingType = URLEncoded, bool UpdateHistory = true)
         {
             this.Address = Address;
@@ -38,11 +45,17 @@ namespace Mechanize.Requests
             this.UpdateHistory = UpdateHistory;
         }
 
-        internal async Task<HttpResponseMessage> RequestAsync(WebBrowser Browser)
+        /// <summary>
+        /// Requests a Response with the Provided Submission Data.
+        /// </summary>
+        /// <param name="Browser">Browser used to Request, and Navigate with.</param>
+        /// <returns>The Response Message.</returns>
+        internal async Task<HttpResponseMessage> RequestAsync(MechanizeBrowser Browser)
         {
             HttpResponseMessage message = null;
             var client = Browser.Client;
 
+            // Creates a POST Request.
             if (Method == "POST")
             {
                 if (Data == null)
@@ -50,6 +63,7 @@ namespace Mechanize.Requests
                     throw new BrowserStateException("There was no content to POST");
                 }
 
+                // Creates the HttpContent to Post, from the provided Encoding Type.
                 var Content =
                     EncodingType == URLEncoded ? CreateUrlEncoded() :
                     EncodingType == MultiPart ? CreateMultiForm() :
@@ -62,15 +76,21 @@ namespace Mechanize.Requests
 
                 using (Content)
                 {
+                    // Posts the Data.
                     message = await client.PostAsync(Address, Content);
                 }
             }
+            // Creates a GET Request.
             else message = await client.GetAsync(CreateGetRequest());
 
             EvaluatedAddress = message.RequestMessage.RequestUri;
             return message;
         }
 
+        /// <summary>
+        /// Creates UrlEncoded Form Content.
+        /// </summary>
+        /// <returns>FormUrlEncodedContent</returns>
         private HttpContent CreateUrlEncoded()
         {
             var encodedData = new Dictionary<string, string>();
@@ -84,6 +104,10 @@ namespace Mechanize.Requests
             return new FormUrlEncodedContent(encodedData);
         }
 
+        /// <summary>
+        /// Creates MultPart/FormData Content.
+        /// </summary>
+        /// <returns>MultipartFormDataContent</returns>
         private HttpContent CreateMultiForm()
         {
             var multipartForm = new MultipartFormDataContent();
@@ -103,6 +127,10 @@ namespace Mechanize.Requests
             return multipartForm;
         }
 
+        /// <summary>
+        /// Creates the GET Request Uri with Query String.
+        /// </summary>
+        /// <returns>The GET Uri</returns>
         private Uri CreateGetRequest()
         {
             var uri = Address;
@@ -133,12 +161,24 @@ namespace Mechanize.Requests
         /// </summary>
         public Uri EvaluatedAddress { get; private set; }
 
+        /// <summary>
+        /// The HttpMethod to Request with.
+        /// </summary>
         public readonly string Method;
 
+        /// <summary>
+        /// The state data for the Web Page.
+        /// </summary>
         public readonly IReadOnlyList<KeyValuePair<string, IRequestInfo>> Data;
 
+        /// <summary>
+        /// Determines whether to add this Request to the Back/Forward stack.
+        /// </summary>
         public readonly bool UpdateHistory;
 
+        /// <summary>
+        /// The Encoding Type that this Page will be Requested with.
+        /// </summary>
         public readonly string EncodingType;
     }
 }

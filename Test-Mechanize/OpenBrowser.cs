@@ -4,6 +4,9 @@ using System.Runtime.InteropServices;
 
 namespace Test_Mechanize
 {
+    /// <summary>
+    /// Opens a Uri in the System's Default Browser.
+    /// </summary>
     public static class OpenBrowser
     {
         public static void Open(Uri Uri)

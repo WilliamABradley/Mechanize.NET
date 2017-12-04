@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 
 namespace Mechanize
 {
+    /// <summary>
+    /// A WebPage that is the Result of a call to <see cref="MechanizeBrowser.NavigateAsync(WebPageRequestInfo)"/>, or as a result of a Form Submission. <para/>
+    /// Any state information can be found in <see cref="RequestInfo"/>, and is used to reload the page with the same state. Although any form data changed on this page will be lost.
+    /// </summary>
     public class WebPage
     {
-        internal static async Task<WebPage> Create(WebBrowser Browser, WebPageRequestInfo RequestInfo)
+        internal static async Task<WebPage> Create(MechanizeBrowser Browser, WebPageRequestInfo RequestInfo)
         {
             var page = new WebPage(Browser, RequestInfo);
             await page.LoadAsync();
             return page;
         }
 
-        private WebPage(WebBrowser Browser, WebPageRequestInfo RequestInfo)
+        private WebPage(MechanizeBrowser Browser, WebPageRequestInfo RequestInfo)
         {
             SourceBrowser = Browser;
             this.RequestInfo = RequestInfo;
@@ -42,9 +46,9 @@ namespace Mechanize
         }
 
         /// <summary>
-        /// This reloads the Web Page statefully, it remembers all of the original posted Form Data, if any.
+        /// This reloads the Web Page statefully, it remembers all of the original posted Form Data, if any. <para/>
+        /// Any modified form data belonging to this page will be lost.
         /// </summary>
-        /// <returns></returns>
         public Task ReloadAsync()
         {
             return LoadAsync();
@@ -68,14 +72,29 @@ namespace Mechanize
 
         private FormCollection _Forms;
 
+        /// <summary>
+        /// The Request Information that was used to Load the Page, as well as reloading the Page.
+        /// </summary>
         public WebPageRequestInfo RequestInfo { get; }
 
+        /// <summary>
+        /// Determines if the current Page is Html, if not, <see cref="Document"/> will be null.
+        /// </summary>
         public bool IsHtml { get; private set; }
 
+        /// <summary>
+        /// Determines if this Page is the Current Page for the Browser.
+        /// </summary>
         public bool IsCurrentPage => SourceBrowser.CurrentPage == this;
 
+        /// <summary>
+        /// The Html for this Page, Call <see cref="ReloadAsync"/> to load this page again, with the same state.
+        /// </summary>
         public HtmlDocument Document { get; private set; }
 
-        public readonly WebBrowser SourceBrowser;
+        /// <summary>
+        /// The Browser that this WebPage belongs to.
+        /// </summary>
+        public readonly MechanizeBrowser SourceBrowser;
     }
 }

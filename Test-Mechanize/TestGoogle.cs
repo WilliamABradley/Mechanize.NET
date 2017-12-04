@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace Test_Mechanize
 {
+    /// <summary>
+    /// Tests Mechanize.NET with a Search Query.
+    /// </summary>
     public static class TestGoogle
     {
         public static async Task Test()
         {
-            using (var browser = new WebBrowser())
+            using (var browser = new MechanizeBrowser())
             {
                 var page = await browser.NavigateAsync("https://www.google.com/");
                 if (page.IsHtml)
