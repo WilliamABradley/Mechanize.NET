@@ -3,7 +3,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>Test.Mechanize.NET</AssemblyName>
+    <RootNamespace>Test_Mechanize</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WilliamBradley.ConsoleHelpers" Version="1.0.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Mechanize\Mechanize.csproj" />

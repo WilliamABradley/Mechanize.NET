@@ -1,45 +1,67 @@
 ﻿using Mechanize.Exceptions;
+using Mechanize.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Mechanize
 {
+    /// <summary>
+    /// The Mechanize Browser for .NET, used for Navigating Statefully, and collecting and manipulating forms.
+    /// </summary>
     public class WebBrowser : IDisposable
     {
-        public WebBrowser(TimeSpan? Timeout = null, bool AllowXHtml = false)
+        /// <summary>
+        /// Constructor for <see cref="WebBrowser"/>.
+        /// </summary>
+        /// <param name="Timeout">The Custom Timeout that the Client should wait for concluding that a page has failed to load.</param>
+        public WebBrowser(TimeSpan? Timeout = null)
         {
-            this.AllowXHtml = AllowXHtml;
-            Client = new HttpClient();
-            if (Timeout != null)
-            {
-                Client.Timeout = Timeout.Value;
-            }
         }
 
-        public async Task<WebPage> Open(Uri Uri, Dictionary<string, string> Data = null)
+        /// <summary>
+        /// Navigates to a new Web Page using GET, given the provided Uri, and optional Data.
+        /// </summary>
+        /// <param name="Uri">Page to Navigate to.</param>
+        /// <returns>Navigated Web Page.</returns>
+        public Task<WebPage> NavigateAsync(string Uri)
         {
-            return await MechanizeOpen(Uri, Data);
+            return NavigateAsync(new Uri(Uri));
         }
 
-        private async Task<WebPage> MechanizeOpen(Uri Uri, Dictionary<string, string> Data = null, bool UpdateHistory = true, bool Visit = true)
+        /// <summary>
+        /// Navigates to a new Web Page using GET, given the provided Uri, and optional Data.
+        /// </summary>
+        /// <param name="Uri">Page to Navigate to.</param>
+        /// <returns>Navigated Web Page.</returns>
+        public Task<WebPage> NavigateAsync(Uri Uri)
         {
-            using (var request = new HttpRequestMessage(Data != null ? HttpMethod.Post : HttpMethod.Get, Uri))
-            {
-                using (var response = await Client.SendAsync(request))
-                {
-                    if (CurrentPage != null) _History.Add(CurrentPage);
-                    CurrentPage = await WebPage.Create(Uri, response);
-                    return CurrentPage;
-                }
-            }
+            return NavigateAsync(new WebPageRequestInfo(Uri));
         }
 
+        /// <summary>
+        /// Navigates to a new Web Page, given the provided Request Information.
+        /// </summary>
+        /// <param name="Info">Request Information.</param>
+        /// <returns>Navigated Web Page.</returns>
+        public async Task<WebPage> NavigateAsync(WebPageRequestInfo Info)
+        {
+            if (Info.UpdateHistory && CurrentPage != null) _History.Add(CurrentPage);
+            CurrentPage = await WebPage.Create(this, Info);
+            return CurrentPage;
+        }
+
+        /// <summary>
+        /// Navigates up the History Stack, if possible.
+        /// </summary>
+        /// <param name="Steps">How many Pages backward to go.</param>
+        /// <exception cref="BrowserStateException"/>
+        /// <returns>Back Page</returns>
         public WebPage GoBack(int Steps = 1)
         {
-            CurrentPage?.Dispose();
             while (Steps > 0 || CurrentPage == null)
             {
                 try
@@ -55,9 +77,14 @@ namespace Mechanize
             return CurrentPage;
         }
 
+        /// <summary>
+        /// Navigates up the Forward Stack, if possible.
+        /// </summary>
+        /// <param name="Steps">How many Pages forward to go.</param>
+        /// <exception cref="BrowserStateException"/>
+        /// <returns>Forward Page</returns>
         public WebPage GoForward(int Steps = 1)
         {
-            CurrentPage?.Dispose();
             while (Steps > 0 || CurrentPage == null)
             {
                 try
@@ -73,39 +100,145 @@ namespace Mechanize
             return CurrentPage;
         }
 
+        /// <summary>
+        /// Clears both Forward and History Stacks.
+        /// </summary>
         public void ClearHistory()
         {
             foreach (var item in History.Reverse())
             {
-                item.Dispose();
                 _History.Remove(item);
             }
 
             foreach (var item in ForwardHistory.Reverse())
             {
-                item.Dispose();
                 _ForwardHistory.Remove(item);
             }
         }
 
+        /// <summary>
+        /// Disposes of the Internal Client, and Client Handler.
+        /// </summary>
         public void Dispose()
         {
             Client?.Dispose();
+            ClientHandler?.Dispose();
+            Disposed = true;
         }
 
+        /// <summary>
+        /// The Current Page that the Browser is Navigated to.
+        /// </summary>
         public WebPage CurrentPage { get; private set; }
 
+        /// <summary>
+        /// Determines if the Browser can go Back a Page.
+        /// </summary>
         public bool CanGoBack => History.Any();
+
+        /// <summary>
+        /// Determines if the Browser can go Forward a Page.
+        /// </summary>
         public bool CanGoForward => ForwardHistory.Any();
 
+        /// <summary>
+        /// The History Stack, for when NavigateAsync is used more than once, the current page gets added to the History stack.
+        /// </summary>
         public IReadOnlyList<WebPage> History => _History;
+
         private List<WebPage> _History = new List<WebPage>();
 
+        /// <summary>
+        /// The Forward History Stack, for when the <see cref="GoBack(int)"/> function is used, the current page gets added to the forward stack.
+        /// </summary>
         public IReadOnlyList<WebPage> ForwardHistory => _ForwardHistory;
+
         private List<WebPage> _ForwardHistory = new List<WebPage>();
 
-        public bool AllowXHtml { get; }
+        /// <summary>
+        /// The Cookies for this Session.
+        /// </summary>
+        public CookieContainer Cookies { get; } = new CookieContainer();
 
-        private HttpClient Client { get; }
+        /// <summary>
+        /// The Internal Client for handling Page Operations.
+        /// </summary>
+        internal HttpClient Client
+        {
+            get
+            {
+                if (Disposed || _Client == null)
+                {
+                    // Ensures that the old Instances are disposed of, if they exist.
+                    ClientHandler?.Dispose();
+                    _Client?.Dispose();
+
+                    // Creates the Handler for Controlling Cookies.
+                    ClientHandler = new HttpClientHandler
+                    {
+                        CookieContainer = Cookies
+                    };
+                    _Client = new HttpClient(ClientHandler);
+                    if (TimeOut.HasValue)
+                    {
+                        _Client.Timeout = TimeOut.Value;
+                    }
+                    if (!string.IsNullOrWhiteSpace(UserAgent))
+                    {
+                        _Client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+                    }
+                    Disposed = false;
+                }
+                return _Client;
+            }
+        }
+
+        private HttpClient _Client;
+
+        /// <summary>
+        /// The Handler for the HttpClient, use it to configure any custom settings for the internal Client.
+        /// </summary>
+        public HttpClientHandler ClientHandler { get; private set; }
+
+        /// <summary>
+        /// The User Agent for the Browser to mimic.
+        /// </summary>
+        public string UserAgent
+        {
+            get => _UserAgent;
+            set
+            {
+                _UserAgent = value;
+                if (!Disposed && _Client != null)
+                {
+                    _Client.DefaultRequestHeaders.Add("User-Agent", _UserAgent);
+                }
+            }
+        }
+
+        private string _UserAgent;
+
+        /// <summary>
+        /// The Custom Timeout that the Client should wait for concluding that a page has failed to load.
+        /// </summary>
+        public TimeSpan? TimeOut
+        {
+            get => _TimeOut;
+            set
+            {
+                _TimeOut = value;
+                if (_TimeOut.HasValue && !Disposed && _Client != null)
+                {
+                    Client.Timeout = _TimeOut.Value;
+                }
+            }
+        }
+
+        private TimeSpan? _TimeOut;
+
+        /// <summary>
+        /// Determines the state of the Internal Client and Handler.
+        /// </summary>
+        private bool Disposed = false;
     }
 }

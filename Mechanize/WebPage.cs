@@ -1,63 +1,81 @@
 ﻿using HtmlAgilityPack;
 using Mechanize.Forms;
+using Mechanize.Requests;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Mechanize
 {
-    public class WebPage : IDisposable
+    public class WebPage
     {
-        internal static async Task<WebPage> Create(Uri Address, HttpResponseMessage Response)
+        internal static async Task<WebPage> Create(WebBrowser Browser, WebPageRequestInfo RequestInfo)
         {
-            var html = await Response.Content.ReadAsStringAsync();
-            return new WebPage(Address, Response, html);
+            var page = new WebPage(Browser, RequestInfo);
+            await page.LoadAsync();
+            return page;
         }
 
-        private WebPage(Uri Address, HttpResponseMessage Response, string html)
+        private WebPage(WebBrowser Browser, WebPageRequestInfo RequestInfo)
         {
-            this.Address = Address;
+            SourceBrowser = Browser;
+            this.RequestInfo = RequestInfo;
+        }
 
-            IsHtml = !string.IsNullOrWhiteSpace(html);
-            if (IsHtml)
+        /// <summary>
+        /// Loads all of the Page data, and starts populating the Html.
+        /// </summary>
+        private async Task LoadAsync()
+        {
+            // Clears out old data.
+            _Forms = null;
+
+            using (var response = await RequestInfo.RequestAsync(SourceBrowser))
             {
-                Document = new HtmlDocument();
-                Document.LoadHtml(html);
+                var html = await response.Content.ReadAsStringAsync();
+                IsHtml = !string.IsNullOrWhiteSpace(html);
+                if (IsHtml)
+                {
+                    Document = new HtmlDocument();
+                    Document.LoadHtml(html);
+                }
             }
         }
 
-        public void Dispose()
+        /// <summary>
+        /// This reloads the Web Page statefully, it remembers all of the original posted Form Data, if any.
+        /// </summary>
+        /// <returns></returns>
+        public Task ReloadAsync()
         {
+            return LoadAsync();
         }
 
-        public void Reload()
-        {
-        }
-
-        public IReadOnlyDictionary<string, HtmlForm> Forms
+        /// <summary>
+        /// Provides a Dictionary to get all forms, although not all Forms are available this way, such as ones with No Name, or duplicates. <para/>
+        /// To access all available forms, with duplicates and nameless ones, use <see cref="FormCollection.AllForms"/>.
+        /// </summary>
+        public FormCollection Forms
         {
             get
             {
                 if (_Forms == null)
                 {
-                    var forms = Document.DocumentNode.Descendants()?.Where(item => item.Name == "form");
-                    _Forms = forms
-                        .Select(form => new HtmlForm(this, form))
-                        .ToDictionary(form => form.Name, form => form);
+                    _Forms = new FormCollection(this, Document);
                 }
-
                 return _Forms;
             }
         }
 
-        private Dictionary<string, HtmlForm> _Forms;
+        private FormCollection _Forms;
 
-        public Uri Address { get; }
+        public WebPageRequestInfo RequestInfo { get; }
 
-        public bool IsHtml { get; }
+        public bool IsHtml { get; private set; }
 
-        private readonly HtmlDocument Document;
+        public bool IsCurrentPage => SourceBrowser.CurrentPage == this;
+
+        public HtmlDocument Document { get; private set; }
+
+        public readonly WebBrowser SourceBrowser;
     }
 }

@@ -4,7 +4,7 @@ namespace Mechanize.Forms.Controls
 {
     public class TextInputControl : HtmlFormControl
     {
-        public TextInputControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal TextInputControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
         {
         }
     }

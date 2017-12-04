@@ -5,6 +5,14 @@
         Unknown,
         Select,
         Text,
-        Submit
+        TextArea,
+        Submit,
+        Ignore,
+        Password,
+        Hidden,
+        Radio,
+        Checkbox,
+        Image,
+        File
     }
 }

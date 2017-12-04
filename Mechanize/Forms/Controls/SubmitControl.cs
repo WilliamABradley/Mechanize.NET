@@ -1,21 +1,17 @@
 ﻿using HtmlAgilityPack;
-using System;
-using System.Drawing;
+using System.Threading.Tasks;
 
 namespace Mechanize.Forms.Controls
 {
-    public class SubmitControl : HtmlFormControl, IFormClickable
+    public class SubmitControl : HtmlFormControl
     {
         internal SubmitControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
         {
         }
 
-        public void Click(Point Coordinates)
+        public Task<WebPage> Submit()
         {
-            throw new NotImplementedException();
+            return Form.SubmitForm(this);
         }
-
-        public bool Clicked { get => _Clicked; internal set => _Clicked = value; }
-        private bool _Clicked;
     }
 }
