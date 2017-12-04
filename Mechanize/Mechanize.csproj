@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Mechanize.NET</AssemblyName>
+    <Title>Mechanize.NET</Title>
+    <Description>Stateful programmatic web browsing, based on Python-Mechanize, which is based on Andy Lester’s Perl module WWW::Mechanize.</Description>
+    <PackageTags>dotnet dotnet-standard analytics spider scaper crawler robots html htmlagilitypack csharp</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

@@ -6,7 +6,7 @@ namespace Mechanize.Forms.Controls
 {
     /// <summary>
     /// File Control for adding File Data to a Form. <para/>
-    /// The Value of this Control is always null, use <see cref="SelectFile(byte[], string)"/> instead.
+    /// Use <see cref="SelectFile(byte[], string)"/> to add a File to the Control.
     /// </summary>
     public class FileControl : HtmlFormControl
     {

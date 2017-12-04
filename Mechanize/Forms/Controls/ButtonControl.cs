@@ -9,7 +9,6 @@ namespace Mechanize.Forms.Controls
     /// Covers Html elements: INPUT/RESET, BUTTON/RESET, INPUT/BUTTON, BUTTON/BUTTON. <para/>
     /// These controls are always unsuccessful, in the terminology of HTML 4 (ie. they never require any information to be returned to the server). <para/>
     /// BUTTON/BUTTON is used to generate events for script embedded in HTML. <para/>
-    /// The value attribute of IgnoreControl is always null.
     /// </summary>
     public class ButtonControl : HtmlFormControl
     {

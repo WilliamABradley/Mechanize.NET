@@ -7,7 +7,8 @@ using System.Linq;
 namespace Mechanize.Forms.Controls
 {
     /// <summary>
-    /// Represents the Structure of a List based control, such as the <see cref="SelectControl"/>, <see cref="CheckBoxControl"/> or <see cref="RadioControl"/>.
+    /// Represents the Structure of a List based control, such as the
+    /// <see cref="SelectControl"/>, <see cref="CheckBoxControl"/> or <see cref="RadioControl"/>.
     /// </summary>
     public abstract class ListControl : ScalarControl
     {
