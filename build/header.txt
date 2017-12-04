@@ -1,4 +1,4 @@
-// ******************************************************************
+﻿// ******************************************************************
 // Copyright (c) William Bradley
 // This code is licensed under the MIT License (MIT).
 // THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
@@ -9,19 +9,3 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
-
-using HtmlAgilityPack;
-
-namespace Mechanize.Forms.Controls
-{
-    /// <summary>
-    /// Textual Input Control. <para/>
-    /// Covers HTML elements: INPUT/TEXT, INPUT/PASSWORD, INPUT/HIDDEN, TEXTAREA
-    /// </summary>
-    public class TextInputControl : ScalarControl
-    {
-        internal TextInputControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
-        {
-        }
-    }
-}
