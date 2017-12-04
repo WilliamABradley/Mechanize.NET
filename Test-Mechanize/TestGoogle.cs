@@ -19,7 +19,7 @@ namespace Test_Mechanize
                 if (page.IsHtml)
                 {
                     var form = page.Forms["f"];
-                    var queryfield = form.FindControl<TextInputControl>("q");
+                    var queryfield = form.FindControl<ScalarControl>("q");
 
                     Console.WriteLine("Enter a Google Search Query: ");
                     queryfield.Value = Console.ReadLine();

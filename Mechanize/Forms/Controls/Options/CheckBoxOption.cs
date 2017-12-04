@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Mechanize.Forms.Controls.Options
 {
+    /// <summary>
+    /// An option pertaining to a <see cref="CheckBoxControl"/>.
+    /// </summary>
     public class CheckBoxOption : ListOption
     {
         internal CheckBoxOption(ListControl Parent, HtmlNode Node) : base(Parent, Node)
@@ -17,11 +20,19 @@ namespace Mechanize.Forms.Controls.Options
                 .FirstOrDefault(item => item.Name == "checked") != null;
         }
 
-        public override string Name => Node.GetAttributeValue("name", null);
+        /// <summary>
+        /// The Label text for this Option.
+        /// </summary>
         public override string Label => LabelNode?.InnerText;
 
+        /// <summary>
+        /// The Value used for creating the Submission form, defaults to "on" if selected and no Value attribute exists.
+        /// </summary>
         public override string TransmitValue => !string.IsNullOrWhiteSpace(Value) ? Value : Selected ? "on" : null;
 
-        private readonly HtmlNode LabelNode;
+        /// <summary>
+        /// The Underlying node for this option's Label.
+        /// </summary>
+        public readonly HtmlNode LabelNode;
     }
 }

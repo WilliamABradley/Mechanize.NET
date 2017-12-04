@@ -1,7 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Mechanize.Forms;
 using Mechanize.Requests;
-using System;
 using System.Threading.Tasks;
 
 namespace Mechanize

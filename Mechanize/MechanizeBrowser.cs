@@ -58,7 +58,7 @@ namespace Mechanize
         /// Navigates up the History Stack, if possible.
         /// </summary>
         /// <param name="Steps">How many Pages backward to go.</param>
-        /// <exception cref="BrowserStateException"/>
+        /// <exception cref="MechanizeBrowserStateException">Already at start of History</exception>
         /// <returns>Back Page</returns>
         public WebPage GoBack(int Steps = 1)
         {
@@ -72,7 +72,7 @@ namespace Mechanize
                 }
                 catch (InvalidOperationException)
                 {
-                    throw new BrowserStateException("Already at start of History");
+                    throw new MechanizeBrowserStateException("Already at start of History");
                 }
             }
             return CurrentPage;
@@ -82,7 +82,7 @@ namespace Mechanize
         /// Navigates up the Forward Stack, if possible.
         /// </summary>
         /// <param name="Steps">How many Pages forward to go.</param>
-        /// <exception cref="BrowserStateException"/>
+        /// <exception cref="MechanizeBrowserStateException">Can't go Forward any further</exception>
         /// <returns>Forward Page</returns>
         public WebPage GoForward(int Steps = 1)
         {
@@ -96,7 +96,7 @@ namespace Mechanize
                 }
                 catch (InvalidOperationException)
                 {
-                    throw new BrowserStateException("Can't go Forward any further");
+                    throw new MechanizeBrowserStateException("Can't go Forward any further");
                 }
             }
             return CurrentPage;

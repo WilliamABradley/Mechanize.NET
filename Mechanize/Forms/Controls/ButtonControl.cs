@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
-using System;
+using Mechanize.Requests;
+using System.Collections.Generic;
 
 namespace Mechanize.Forms.Controls
 {
@@ -10,16 +11,19 @@ namespace Mechanize.Forms.Controls
     /// BUTTON/BUTTON is used to generate events for script embedded in HTML. <para/>
     /// The value attribute of IgnoreControl is always null.
     /// </summary>
-    public class IgnoreControl : HtmlFormControl
+    public class ButtonControl : HtmlFormControl
     {
-        internal IgnoreControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal ButtonControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
         {
         }
 
         /// <summary>
-        /// Don't touch this.
+        /// Returns null, as this Control does not add to the Form.
         /// </summary>
-        /// <exception cref="NotSupportedException"></exception>
-        public override string Value { get => null; set => throw new NotSupportedException("Ignore this Control"); }
+        /// <returns>null</returns>
+        internal override List<IRequestInfo> GetRequestInfo()
+        {
+            return null;
+        }
     }
 }

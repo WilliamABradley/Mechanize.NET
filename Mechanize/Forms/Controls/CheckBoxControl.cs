@@ -1,12 +1,17 @@
 ﻿using HtmlAgilityPack;
 using Mechanize.Forms.Controls.Options;
+using Mechanize.Requests;
 using System;
 using System.Collections.Generic;
-using Mechanize.Requests;
 using System.Linq;
 
 namespace Mechanize.Forms.Controls
 {
+    /// <summary>
+    /// CheckBox Control <para/>
+    /// Covers: INPUT/CHECKBOX <para/>
+    /// Allows multiple Options to be selected at any time.
+    /// </summary>
     public class CheckBoxControl : ListControl
     {
         internal CheckBoxControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
@@ -19,6 +24,10 @@ namespace Mechanize.Forms.Controls
             _Options.Add(new CheckBoxOption(this, Option));
         }
 
+        /// <summary>
+        /// De-Selects the Provided option, if it is an option for this form.
+        /// </summary>
+        /// <param name="Value">Value of the Option to De-Select.</param>
         public void DeSelect(string Value)
         {
             var option = FindOption(Value);
@@ -29,18 +38,29 @@ namespace Mechanize.Forms.Controls
             DeSelect(option);
         }
 
+        /// <summary>
+        /// De-Selects the Provided option, if it is an option for this form.
+        /// </summary>
+        /// <param name="Option">Option to De-Select.</param>
         public void DeSelect(ListOption Option)
         {
             Option.Selected = false;
         }
 
+        /// <summary>
+        /// Gets the Selected Items to add to the Submission Form.
+        /// </summary>
+        /// <returns>Selected Items to add to the Submission Form.</returns>
         internal override List<IRequestInfo> GetRequestInfo()
         {
-            return Options
-                .Where(item => ((CheckBoxOption)item).Selected == true)
-                .Select(item => (IRequestInfo)new StringRequestInfo(item.TransmitValue)).ToList();
+            return Selected
+                .Select(item => (IRequestInfo)new StringRequestInfo(item.TransmitValue))
+                .ToList();
         }
 
+        /// <summary>
+        /// The underlying value from the Selection, multiple Selected options can be specified, by separating the TransmitValue with a semi-colon (";").
+        /// </summary>
         public override string Value
         {
             get
@@ -61,8 +81,14 @@ namespace Mechanize.Forms.Controls
             }
         }
 
+        /// <summary>
+        /// The Available options for this Control to Select from.
+        /// </summary>
         public override IReadOnlyList<ListOption> Options => _Options;
 
+        /// <summary>
+        /// The Checkboxes that are currently selected for this Group. Use <see cref="ListControl.Select(ListOption)"/> to add a Selected Item, or use <see cref="DeSelect(ListOption)"/> to deselect a Selected item.
+        /// </summary>
         public IReadOnlyList<CheckBoxOption> Selected => _Options.Cast<CheckBoxOption>()
             .Where(item => item.Selected)
             .ToList();

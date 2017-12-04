@@ -9,6 +9,16 @@ using System.Threading.Tasks;
 
 namespace Mechanize.Forms
 {
+    /// <summary>
+    /// Represents a single Html Form element for a WebPage. <para/>
+    /// A form consists of a sequence of controls that usually have names, and
+    /// which can take on various values.The values of the various types of
+    /// controls represent variously: text, zero-or-one-of-many or many-of-many
+    /// choices, and files to be uploaded.Some controls can be clicked on to
+    /// submit the form. <para/>
+    /// Forms can be filled in with data to be returned to the server, and then submitted, using the <see cref="SubmitForm"/>
+    /// method. Or via collecting the Submission data with <see cref="GetSubmissionData"/>.
+    /// </summary>
     public class HtmlForm : IReadOnlyList<HtmlFormControl>
     {
         internal HtmlForm(WebPage SourcePage, HtmlNode Node)
@@ -50,12 +60,14 @@ namespace Mechanize.Forms
                 .Where(item =>
                 {
                     var name = item.Name.ToLower();
+                    // Only checks the valid form Tags.
                     return name == "select"
                                 || name == "input"
                                 || name == "button";
                 }
                 ))
             {
+                // Determines and adds the Control to the List.
                 GetFormControl(control);
             }
         }
@@ -64,12 +76,12 @@ namespace Mechanize.Forms
         /// Creates the Wrapper Class around potentially Valid Form Controls.
         /// </summary>
         /// <param name="control">Node to determine the control it relates to.</param>
-        /// <returns>Control wrapper if valid form control, null if not.</returns>
         private void GetFormControl(HtmlNode control)
         {
             var name = control.GetAttributeValue("name", null);
             switch (HtmlFormControl.GetControlType(control))
             {
+                // Text Input Aliases.
                 case FormControlType.Text:
                 case FormControlType.TextArea:
                 case FormControlType.Password:
@@ -86,7 +98,7 @@ namespace Mechanize.Forms
                     break;
 
                 case FormControlType.Ignore:
-                    _List.Add(new IgnoreControl(this, control));
+                    _List.Add(new ButtonControl(this, control));
                     break;
 
                 case FormControlType.File:
@@ -94,7 +106,7 @@ namespace Mechanize.Forms
                     break;
 
                 case FormControlType.Select:
-                    _List.Add(new SelectionControl(this, control));
+                    _List.Add(new SelectControl(this, control));
                     break;
 
                 case FormControlType.Radio:

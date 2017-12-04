@@ -50,6 +50,7 @@ namespace Mechanize.Requests
         /// </summary>
         /// <param name="Browser">Browser used to Request, and Navigate with.</param>
         /// <returns>The Response Message.</returns>
+        /// <exception cref="MechanizeBrowserStateException">No Content to Post, can't discern Encoding Type.</exception>
         internal async Task<HttpResponseMessage> RequestAsync(MechanizeBrowser Browser)
         {
             HttpResponseMessage message = null;
@@ -60,7 +61,7 @@ namespace Mechanize.Requests
             {
                 if (Data == null)
                 {
-                    throw new BrowserStateException("There was no content to POST");
+                    throw new MechanizeBrowserStateException("There was no content to POST");
                 }
 
                 // Creates the HttpContent to Post, from the provided Encoding Type.
@@ -71,7 +72,7 @@ namespace Mechanize.Requests
 
                 if (Content == null)
                 {
-                    throw new BrowserStateException("Could not discern Encoding Type");
+                    throw new MechanizeBrowserStateException("Could not discern Encoding Type");
                 }
 
                 using (Content)
