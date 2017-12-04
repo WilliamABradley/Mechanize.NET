@@ -2,10 +2,10 @@
 
 Stateful programmatic web browsing, based on Python-Mechanize, which is based on Andy Lester’s Perl module WWW::Mechanize. 
 
-[![license](https://img.shields.io/github/license/williamabradley/Mechanize.NET.svg)]()
-[![AppVeyor](https://img.shields.io/appveyor/ci/WilliamABradley/mechanize-net.svg)]()
-[![NuGet](https://img.shields.io/nuget/v/Mechanize.NET.svg)]()
-[![NuGet](https://img.shields.io/nuget/dt/Mechanize.NET.svg)]()
+[![license](https://img.shields.io/github/license/williamabradley/Mechanize.NET.svg)](https://github.com/WilliamABradley/Mechanize.NET/blob/master/LICENSE)
+[![AppVeyor](https://img.shields.io/appveyor/ci/WilliamABradley/mechanize-net.svg)](https://ci.appveyor.com/project/WilliamABradley/mechanize-net)
+[![NuGet](https://img.shields.io/nuget/v/Mechanize.NET.svg)](https://www.nuget.org/packages/Mechanize.NET/)
+[![NuGet](https://img.shields.io/nuget/dt/Mechanize.NET.svg)](https://www.nuget.org/packages/Mechanize.NET/)
 
 ## Example
 
