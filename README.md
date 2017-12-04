@@ -2,6 +2,11 @@
 
 Stateful programmatic web browsing, based on Python-Mechanize, which is based on Andy Lester’s Perl module WWW::Mechanize. 
 
+[![license](https://img.shields.io/github/license/williamabradley/Mechanize.NET.svg)]()
+[![AppVeyor](https://img.shields.io/appveyor/ci/WilliamABradley/mechanize-net.svg)]()
+[![NuGet](https://img.shields.io/nuget/v/Mechanize.NET.svg)]()
+[![NuGet](https://img.shields.io/nuget/dt/Mechanize.NET.svg)]()
+
 ## Example
 
 ### Google Search
@@ -19,10 +24,6 @@ if (page.IsHtml)
     // Collect the Results from contents.
 }
 ```
-
-## Build status
-
-
 
 ## The Mechanize Family
 
