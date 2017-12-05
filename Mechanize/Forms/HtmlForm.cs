@@ -60,7 +60,7 @@ namespace Mechanize.Forms
         /// <returns>The control with matching name.</returns>
         public T FindControl<T>(string Name) where T : HtmlFormControl
         {
-            return (T)this.FirstOrDefault(item => item.Name.Equals(Name, StringComparison.InvariantCultureIgnoreCase));
+            return (T)this.FirstOrDefault(item => item.Name.Equals(Name, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

@@ -13,9 +13,10 @@
 using Mechanize.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Mechanize.Requests
 {
@@ -106,12 +107,12 @@ namespace Mechanize.Requests
         /// <returns>FormUrlEncodedContent</returns>
         private HttpContent CreateUrlEncoded()
         {
-            var encodedData = new Dictionary<string, string>();
+            var encodedData = new List<KeyValuePair<string, string>>();
             foreach (var item in Data)
             {
                 if (item.Value is StringRequestInfo str)
                 {
-                    encodedData.Add(item.Key, str.Value);
+                    encodedData.Add(new KeyValuePair<string, string>(item.Key, str.Value));
                 }
             }
             return new FormUrlEncodedContent(encodedData);
@@ -149,19 +150,32 @@ namespace Mechanize.Requests
             var uri = Address;
             if (Data != null)
             {
-                var query = HttpUtility.ParseQueryString(string.Empty);
+                var query = new List<KeyValuePair<string, string>>();
                 foreach (var item in Data)
                 {
                     if (item.Value is StringRequestInfo str)
                     {
-                        query.Add(item.Key, str.Value);
+                        query.Add(new KeyValuePair<string, string>(item.Key, str.Value));
                     }
                 }
 
-                var builder = new UriBuilder(Address) { Query = query.ToString() };
+                var builder = new UriBuilder(Address) { Query = ToQueryString(query) };
                 uri = builder.Uri;
             }
             return uri;
+        }
+
+        /// <summary>
+        /// Parses a List of Key/Value pairs into a Query string.
+        /// </summary>
+        /// <param name="collection">Key/Value Pairs to Parse</param>
+        /// <returns>Query String</returns>
+        private string ToQueryString(List<KeyValuePair<string, string>> collection)
+        {
+            var querypairs = collection
+                .Select(item =>
+                    string.Format($"{WebUtility.UrlEncode(item.Key)}={WebUtility.UrlEncode(item.Value)}"));
+            return "?" + string.Join("&", querypairs);
         }
 
         /// <summary>

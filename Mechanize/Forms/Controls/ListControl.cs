@@ -63,9 +63,9 @@ namespace Mechanize.Forms.Controls
         public ListOption FindOption(string Value)
         {
             return Options.FirstOrDefault(item =>
-                Value.Equals(item.Value, StringComparison.InvariantCultureIgnoreCase)
-                || Value.Equals(item.Label, StringComparison.InvariantCultureIgnoreCase)
-                || Value.Equals(item.Name, StringComparison.InvariantCultureIgnoreCase));
+                Value.Equals(item.Value, StringComparison.OrdinalIgnoreCase)
+                || Value.Equals(item.Label, StringComparison.OrdinalIgnoreCase)
+                || Value.Equals(item.Name, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
