@@ -10,7 +10,7 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
+using Mechanize.Html;
 using Mechanize.Requests;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace Mechanize.Forms.Controls
     /// </summary>
     public class SubmitControl : HtmlFormControl
     {
-        internal SubmitControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal SubmitControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
         }
 

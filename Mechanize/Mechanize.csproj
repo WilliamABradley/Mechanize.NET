@@ -12,8 +12,4 @@
     <None Include="Forms\Controls\ButtonControl.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.6.6" />
-  </ItemGroup>
-
 </Project>

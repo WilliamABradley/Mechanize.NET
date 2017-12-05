@@ -10,7 +10,7 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
+using Mechanize.Html;
 using Mechanize.Requests;
 using System.Collections.Generic;
 
@@ -24,7 +24,7 @@ namespace Mechanize.Forms.Controls
     /// </summary>
     public class ButtonControl : HtmlFormControl
     {
-        internal ButtonControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal ButtonControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
         }
 

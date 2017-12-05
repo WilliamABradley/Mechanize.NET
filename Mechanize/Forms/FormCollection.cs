@@ -10,7 +10,7 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
+using Mechanize.Html;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +23,12 @@ namespace Mechanize.Forms
     /// </summary>
     public class FormCollection : IReadOnlyDictionary<string, HtmlForm>
     {
-        internal FormCollection(WebPage SourcePage, HtmlDocument Document)
+        internal FormCollection(WebPage SourcePage, IHtmlDocument Document)
         {
             this.SourcePage = SourcePage;
             this.Document = Document;
 
-            var forms = Document.DocumentNode.Descendants()?
+            var forms = Document.DocumentNode.Descendants?
                 .Where(item => item.Name == "form");
 
             _AllForms = forms
@@ -43,7 +43,7 @@ namespace Mechanize.Forms
 
         private List<HtmlForm> _AllForms;
         private Dictionary<string, HtmlForm> _FormDictionary;
-        private readonly HtmlDocument Document;
+        private readonly IHtmlDocument Document;
 
         /// <summary>
         /// The Web Page that this <see cref="FormCollection"/> belongs to.

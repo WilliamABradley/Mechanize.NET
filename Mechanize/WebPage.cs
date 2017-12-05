@@ -10,8 +10,8 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
 using Mechanize.Forms;
+using Mechanize.Html;
 using Mechanize.Requests;
 using System.Threading.Tasks;
 
@@ -50,8 +50,7 @@ namespace Mechanize
                 IsHtml = !string.IsNullOrWhiteSpace(html);
                 if (IsHtml)
                 {
-                    Document = new HtmlDocument();
-                    Document.LoadHtml(html);
+                    Document = SourceBrowser.HtmlParser.Parse(html);
                 }
             }
         }
@@ -101,7 +100,7 @@ namespace Mechanize
         /// <summary>
         /// The Html for this Page, Call <see cref="ReloadAsync"/> to load this page again, with the same state.
         /// </summary>
-        public HtmlDocument Document { get; private set; }
+        public IHtmlDocument Document { get; private set; }
 
         /// <summary>
         /// The Browser that this WebPage belongs to.

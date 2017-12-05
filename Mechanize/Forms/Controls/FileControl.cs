@@ -10,7 +10,7 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
+using Mechanize.Html;
 using Mechanize.Requests;
 using System.Collections.Generic;
 
@@ -22,7 +22,7 @@ namespace Mechanize.Forms.Controls
     /// </summary>
     public class FileControl : HtmlFormControl
     {
-        internal FileControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal FileControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
         }
 

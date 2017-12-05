@@ -10,7 +10,7 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
+using Mechanize.Html;
 
 namespace Mechanize.Forms.Controls.Options
 {
@@ -19,7 +19,7 @@ namespace Mechanize.Forms.Controls.Options
     /// </summary>
     public class SelectOption : ListOption
     {
-        internal SelectOption(ListControl Parent, HtmlNode Node) : base(Parent, Node)
+        internal SelectOption(ListControl Parent, IHtmlNode Node) : base(Parent, Node)
         {
         }
 

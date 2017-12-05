@@ -10,19 +10,27 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
+using HtmlAgilityPack;
 using Mechanize.Html;
 
-namespace Mechanize.Forms.Controls
+namespace Mechanize.HtmlAgility
 {
     /// <summary>
-    /// An Image control that acts like a <see cref="SubmitControl"/>. <para/>
-    /// Covers: INPUT/IMAGE <para/>
-    /// Can handle Coordinates when Submitting content. (Not Implemented yet).
+    /// Creates a Parser for constructing the <see cref="HtmlAgilityDocument"/> from a string. <para/>
+    /// <see cref="HtmlAgilityDocument"/> is a Container for <see cref="HtmlDocument"/>.
     /// </summary>
-    public class ImageControl : SubmitControl
+    public class HtmlAgilityParser : IHtmlParser
     {
-        internal ImageControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
+        /// <summary>
+        /// Parses an Html string into a <see cref="HtmlAgilityDocument"/>.
+        /// </summary>
+        /// <param name="Html">Html to Parse</param>
+        /// <returns>The Html Document.</returns>
+        public IHtmlDocument Parse(string Html)
         {
+            var document = new HtmlDocument();
+            document.LoadHtml(Html);
+            return new HtmlAgilityDocument(document);
         }
     }
 }

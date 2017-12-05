@@ -10,7 +10,7 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
+using Mechanize.Html;
 using System.Linq;
 
 namespace Mechanize.Forms.Controls.Options
@@ -20,12 +20,12 @@ namespace Mechanize.Forms.Controls.Options
     /// </summary>
     public class CheckBoxOption : ListOption
     {
-        internal CheckBoxOption(ListControl Parent, HtmlNode Node) : base(Parent, Node)
+        internal CheckBoxOption(ListControl Parent, IHtmlNode Node) : base(Parent, Node)
         {
             if (ID != null)
             {
-                LabelNode = Parent.Form.Node.Descendants()
-                    .FirstOrDefault(item => item.GetAttributeValue("for", null) == ID);
+                LabelNode = Parent.Form.Node.Descendants
+                    .FirstOrDefault(item => item.GetAttribute("for", null) == ID);
             }
 
             Selected = Node.Attributes
@@ -45,6 +45,6 @@ namespace Mechanize.Forms.Controls.Options
         /// <summary>
         /// The Underlying node for this option's Label.
         /// </summary>
-        public readonly HtmlNode LabelNode;
+        public readonly IHtmlNode LabelNode;
     }
 }

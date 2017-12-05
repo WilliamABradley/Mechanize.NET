@@ -10,19 +10,16 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using Mechanize.Html;
-
-namespace Mechanize.Forms.Controls
+namespace Mechanize.Html
 {
     /// <summary>
-    /// An Image control that acts like a <see cref="SubmitControl"/>. <para/>
-    /// Covers: INPUT/IMAGE <para/>
-    /// Can handle Coordinates when Submitting content. (Not Implemented yet).
+    /// The Html Document that represents the top Node in the DOM Tree made up of <see cref="IHtmlNode"/>s.
     /// </summary>
-    public class ImageControl : SubmitControl
+    public interface IHtmlDocument
     {
-        internal ImageControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
-        {
-        }
+        /// <summary>
+        /// The Document's top Node.
+        /// </summary>
+        IHtmlNode DocumentNode { get; }
     }
 }

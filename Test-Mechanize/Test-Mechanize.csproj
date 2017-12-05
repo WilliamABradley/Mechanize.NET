@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mechanize-HtmlAgilityPack\Mechanize-HtmlAgilityPack.csproj" />
     <ProjectReference Include="..\Mechanize\Mechanize.csproj" />
   </ItemGroup>
 

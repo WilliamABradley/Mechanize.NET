@@ -10,8 +10,8 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
 using Mechanize.Forms.Controls.Options;
+using Mechanize.Html;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +24,7 @@ namespace Mechanize.Forms.Controls
     /// </summary>
     public class RadioControl : ListControl
     {
-        internal RadioControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal RadioControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
             AddOption(Node);
         }
@@ -33,7 +33,7 @@ namespace Mechanize.Forms.Controls
         /// Adds an option to the Group.
         /// </summary>
         /// <param name="Option">Node to Parse and add.</param>
-        internal void AddOption(HtmlNode Option)
+        internal void AddOption(IHtmlNode Option)
         {
             _Options.Add(new RadioOption(this, Option));
         }

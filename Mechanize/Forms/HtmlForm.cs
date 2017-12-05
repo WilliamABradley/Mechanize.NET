@@ -10,8 +10,8 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
 using Mechanize.Forms.Controls;
+using Mechanize.Html;
 using Mechanize.Requests;
 using System;
 using System.Collections;
@@ -33,11 +33,11 @@ namespace Mechanize.Forms
     /// </summary>
     public class HtmlForm : IReadOnlyList<HtmlFormControl>
     {
-        internal HtmlForm(WebPage SourcePage, HtmlNode Node)
+        internal HtmlForm(WebPage SourcePage, IHtmlNode Node)
         {
             this.SourcePage = SourcePage;
             this.Node = Node;
-            Name = Node.GetAttributeValue("name", null);
+            Name = Node.GetAttribute("name", null);
 
             AddControls();
         }
@@ -68,7 +68,7 @@ namespace Mechanize.Forms
         /// </summary>
         private void AddControls()
         {
-            foreach (var control in Node.Descendants()
+            foreach (var control in Node.Descendants
                 .Where(item =>
                 {
                     var name = item.Name.ToLower();
@@ -88,9 +88,9 @@ namespace Mechanize.Forms
         /// Creates the Wrapper Class around potentially Valid Form Controls.
         /// </summary>
         /// <param name="control">Node to determine the control it relates to.</param>
-        private void GetFormControl(HtmlNode control)
+        private void GetFormControl(IHtmlNode control)
         {
-            var name = control.GetAttributeValue("name", null);
+            var name = control.GetAttribute("name", null);
             switch (HtmlFormControl.GetControlType(control))
             {
                 // Text Input Aliases.
@@ -224,7 +224,7 @@ namespace Mechanize.Forms
         /// </summary>
         public string Action
         {
-            get => Node.GetAttributeValue("action", null);
+            get => Node.GetAttribute("action", null);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Mechanize.Forms
         /// </summary>
         public string Method
         {
-            get => Node.GetAttributeValue("method", "GET");
+            get => Node.GetAttribute("method", "GET");
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Mechanize.Forms
         /// </summary>
         public string EncodingType
         {
-            get => Node.GetAttributeValue("enctype", WebPageRequestInfo.URLEncoded);
+            get => Node.GetAttribute("enctype", WebPageRequestInfo.URLEncoded);
         }
 
         /// <summary>
@@ -248,13 +248,13 @@ namespace Mechanize.Forms
         /// </summary>
         public string OnSubmit
         {
-            get => Node.GetAttributeValue("onsubmit", null);
+            get => Node.GetAttribute("onsubmit", null);
         }
 
         /// <summary>
         /// The Html Node that pertains to this form.
         /// </summary>
-        internal readonly HtmlNode Node;
+        internal readonly IHtmlNode Node;
 
         /// <summary>
         /// The Page that this form came from.

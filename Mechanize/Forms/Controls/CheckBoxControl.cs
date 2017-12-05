@@ -10,8 +10,8 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
 using Mechanize.Forms.Controls.Options;
+using Mechanize.Html;
 using Mechanize.Requests;
 using System;
 using System.Collections.Generic;
@@ -26,12 +26,12 @@ namespace Mechanize.Forms.Controls
     /// </summary>
     public class CheckBoxControl : ListControl
     {
-        internal CheckBoxControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal CheckBoxControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
             AddOption(Node);
         }
 
-        internal void AddOption(HtmlNode Option)
+        internal void AddOption(IHtmlNode Option)
         {
             _Options.Add(new CheckBoxOption(this, Option));
         }

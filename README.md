@@ -9,19 +9,24 @@ Stateful programmatic web browsing, based on Python-Mechanize, which is based on
 
 ## Example
 
+To use Mechanize.NET, you need to install one of the HtmlParser Packages, such as **Mechanize.NET-HtmlAgilityPack** or **Mechanize.NET-AngleSharp**.
+
 ### Google Search
 
 ```C#
-var page = await browser.NavigateAsync("https://www.google.com/");
-if (page.IsHtml)
+using (var browser = new MechanizeBrowser(new HtmlAgilityParser()))
 {
-    var form = page.Forms["f"];
-    var queryfield = form.FindControl<ScalarControl>("q");
-    queryfield.Value = "Mechanize.NET";
+    var page = await browser.NavigateAsync("https://www.google.com/");
+    if (page.IsHtml)
+    {
+        var form = page.Forms["f"];
+        var queryfield = form.FindControl<ScalarControl>("q");
+        queryfield.Value = "Mechanize.NET";
 
-    var newpage = await form.SubmitForm();
-    var contents = newpage.Document;
-    // Collect the Results from contents.
+        var newpage = await form.SubmitForm();
+        var contents = newpage.Document;
+        // Collect the Results from contents.
+    }
 }
 ```
 

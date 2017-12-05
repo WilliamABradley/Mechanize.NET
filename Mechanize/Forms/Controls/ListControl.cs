@@ -10,8 +10,8 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
 using Mechanize.Forms.Controls.Options;
+using Mechanize.Html;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace Mechanize.Forms.Controls
     /// </summary>
     public abstract class ListControl : ScalarControl
     {
-        internal ListControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal ListControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
         }
 

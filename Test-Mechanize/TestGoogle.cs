@@ -12,6 +12,7 @@
 
 using Mechanize;
 using Mechanize.Forms.Controls;
+using Mechanize.HtmlAgility;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace Test_Mechanize
     {
         public static async Task Test()
         {
-            using (var browser = new MechanizeBrowser())
+            using (var browser = new MechanizeBrowser(new HtmlAgilityParser()))
             {
                 var page = await browser.NavigateAsync("https://www.google.com/");
                 if (page.IsHtml)
@@ -59,7 +60,7 @@ namespace Test_Mechanize
                         }
                         else
                         {
-                            var results = newpage.Document.DocumentNode.Descendants().Where(item => item.HasClass("g")).ToList();
+                            var results = newpage.Document.DocumentNode.Descendants.Where(item => item.HasClass("g")).ToList();
                             if (results.Count > 0) results.RemoveAt(results.Count - 1); //remove non-query result
 
                             if (results.Any())
@@ -67,7 +68,7 @@ namespace Test_Mechanize
                                 Console.WriteLine("\nResults: \n");
                                 foreach (var result in results)
                                 {
-                                    var elements = result.Descendants();
+                                    var elements = result.Descendants;
                                     var title = elements.FirstOrDefault(item => item.HasClass("r"))?.InnerText;
 
                                     var linkTag = elements.FirstOrDefault(item => item.Name == "cite");

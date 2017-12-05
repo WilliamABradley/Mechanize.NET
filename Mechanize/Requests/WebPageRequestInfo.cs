@@ -41,9 +41,9 @@ namespace Mechanize.Requests
         }
 
         /// <summary>
-        /// Constructs a GET Request for a Web Page.
+        /// Constructs an Http Request for a Web Page.
         /// </summary>
-        /// <param name="Address">Address of the Web Page to GET</param>
+        /// <param name="Address">Address of the Web Page</param>
         /// <param name="Data">The Data to Request this page with.</param>
         /// <param name="Method">The HttpMethod that this Page will be requested with.</param>
         /// <param name="EncodingType">The Encoding Type that this Page will be Requested with.</param>

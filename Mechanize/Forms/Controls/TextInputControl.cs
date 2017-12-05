@@ -10,7 +10,7 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
+using Mechanize.Html;
 
 namespace Mechanize.Forms.Controls
 {
@@ -20,7 +20,7 @@ namespace Mechanize.Forms.Controls
     /// </summary>
     public class TextInputControl : ScalarControl
     {
-        internal TextInputControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal TextInputControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
         }
     }

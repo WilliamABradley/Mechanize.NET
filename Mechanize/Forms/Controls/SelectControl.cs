@@ -10,8 +10,8 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
 using Mechanize.Forms.Controls.Options;
+using Mechanize.Html;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +27,7 @@ namespace Mechanize.Forms.Controls
     /// </summary>
     public class SelectControl : ListControl
     {
-        internal SelectControl(HtmlForm Form, HtmlNode Node) : base(Form, Node)
+        internal SelectControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
             Options.First().Selected = true;
         }
@@ -59,7 +59,7 @@ namespace Mechanize.Forms.Controls
             {
                 if (_Options == null)
                 {
-                    var options = Node.Descendants().Where(item => item.Name.ToLower() == "option");
+                    var options = Node.Descendants.Where(item => item.Name.ToLower() == "option");
                     _Options = options.Select(item => (ListOption)new SelectOption(this, item)).ToList();
                 }
 

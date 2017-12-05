@@ -10,19 +10,34 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
+using HtmlAgilityPack;
 using Mechanize.Html;
 
-namespace Mechanize.Forms.Controls
+namespace Mechanize.HtmlAgility
 {
     /// <summary>
-    /// An Image control that acts like a <see cref="SubmitControl"/>. <para/>
-    /// Covers: INPUT/IMAGE <para/>
-    /// Can handle Coordinates when Submitting content. (Not Implemented yet).
+    /// The Container for <see cref="HtmlAttribute"/>.
     /// </summary>
-    public class ImageControl : SubmitControl
+    public class HtmlAgilityAttribute : IHtmlAttribute
     {
-        internal ImageControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
+        internal HtmlAgilityAttribute(HtmlAttribute Attribute)
         {
+            this.Attribute = Attribute;
         }
+
+        /// <summary>
+        /// The Name of the Attribute.
+        /// </summary>
+        public string Name => Attribute.Name;
+
+        /// <summary>
+        /// The Value of the Attribute.
+        /// </summary>
+        public string Value => Attribute.Value;
+
+        /// <summary>
+        /// The Underlying Attribute Instance.
+        /// </summary>
+        public readonly HtmlAttribute Attribute;
     }
 }

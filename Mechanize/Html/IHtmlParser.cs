@@ -10,19 +10,18 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using Mechanize.Html;
-
-namespace Mechanize.Forms.Controls
+namespace Mechanize.Html
 {
     /// <summary>
-    /// An Image control that acts like a <see cref="SubmitControl"/>. <para/>
-    /// Covers: INPUT/IMAGE <para/>
-    /// Can handle Coordinates when Submitting content. (Not Implemented yet).
+    /// The Html Parser to parse a <see cref="IHtmlDocument"/> from a String.
     /// </summary>
-    public class ImageControl : SubmitControl
+    public interface IHtmlParser
     {
-        internal ImageControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
-        {
-        }
+        /// <summary>
+        /// Parses an Html string into a <see cref="IHtmlDocument"/>.
+        /// </summary>
+        /// <param name="Html">Html to Parse</param>
+        /// <returns>The Html Document.</returns>
+        IHtmlDocument Parse(string Html);
     }
 }

@@ -10,8 +10,8 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
 using Mechanize.Forms.Controls;
+using Mechanize.Html;
 using Mechanize.Requests;
 using System;
 using System.Collections.Generic;
@@ -23,7 +23,7 @@ namespace Mechanize.Forms
     /// </summary>
     public abstract class HtmlFormControl
     {
-        internal HtmlFormControl(HtmlForm Form, HtmlNode Node)
+        internal HtmlFormControl(HtmlForm Form, IHtmlNode Node)
         {
             this.Form = Form;
             this.Node = Node;
@@ -33,17 +33,17 @@ namespace Mechanize.Forms
         /// <summary>
         /// The Html "id" Attribute for this Control.
         /// </summary>
-        public string ID => Node.Id;
+        public string ID => Node.GetAttribute("id", null);
 
         /// <summary>
         /// The Html "disabled" attribute. If <see cref="Disabled"/>, an exception will be thrown when attempting to change value.
         /// </summary>
-        public bool Disabled => Node.GetAttributeValue("disabled", false);
+        public bool Disabled => Node.GetAttribute("disabled", false);
 
         /// <summary>
         /// The Html "readonly" attribute. If <see cref="ReadOnly"/>, an exception will be thrown when attempting to change value.
         /// </summary>
-        public bool ReadOnly => Node.GetAttributeValue("readonly", false);
+        public bool ReadOnly => Node.GetAttribute("readonly", false);
 
         /// <summary>
         /// The Html "name" Attribute for this control.
@@ -60,7 +60,7 @@ namespace Mechanize.Forms
         /// <returns>Attribute Value</returns>
         public string GetAttribute(string Attribute)
         {
-            return Node.GetAttributeValue(Attribute, null);
+            return Node.GetAttribute(Attribute, null);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Mechanize.Forms
         /// <param name="Value"></param>
         public virtual void SetAttribute(string Attribute, string Value)
         {
-            Node.SetAttributeValue(Attribute, Value);
+            Node.SetAttribute(Attribute, Value);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Mechanize.Forms
         /// <summary>
         /// The Underlying Html Node that this Control Pertains to.
         /// </summary>
-        public readonly HtmlNode Node;
+        public readonly IHtmlNode Node;
 
         /// <summary>
         /// The Html Form that this Control belongs to.
@@ -110,14 +110,14 @@ namespace Mechanize.Forms
         /// </summary>
         /// <param name="Node">Node to Evaluate.</param>
         /// <returns>The Type of the Form Control</returns>
-        internal static FormControlType GetControlType(HtmlNode Node)
+        internal static FormControlType GetControlType(IHtmlNode Node)
         {
             // Check agains the Control Name.
             var type = GetControlType(Node.Name.ToLower());
             if (type == FormControlType.Unknown)
             {
                 // Fetch the type attribute.
-                var typeattr = Node.GetAttributeValue("type", "text");
+                var typeattr = Node.GetAttribute("type", "text");
                 // Check against type attribute.
                 type = GetControlType(typeattr);
                 if (type == FormControlType.Unknown)

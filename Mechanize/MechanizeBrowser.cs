@@ -11,6 +11,7 @@
 // ******************************************************************
 
 using Mechanize.Exceptions;
+using Mechanize.Html;
 using Mechanize.Requests;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,12 @@ namespace Mechanize
         /// <summary>
         /// Constructor for <see cref="MechanizeBrowser"/>.
         /// </summary>
-        /// <param name="Timeout">The Custom Timeout that the Client should wait for concluding that a page has failed to load.</param>
-        public MechanizeBrowser(TimeSpan? Timeout = null)
+        /// <param name="HtmlParser">The Parser for Html.</param>
+        /// <param name="TimeOut">The Custom Timeout that the Client should wait for concluding that a page has failed to load.</param>
+        public MechanizeBrowser(IHtmlParser HtmlParser, TimeSpan? TimeOut = null)
         {
+            this.HtmlParser = HtmlParser;
+            this.TimeOut = TimeOut;
         }
 
         /// <summary>
@@ -249,6 +253,11 @@ namespace Mechanize
         }
 
         private TimeSpan? _TimeOut;
+
+        /// <summary>
+        /// The Html Parser for this Session.
+        /// </summary>
+        public readonly IHtmlParser HtmlParser;
 
         /// <summary>
         /// Determines the state of the Internal Client and Handler.
