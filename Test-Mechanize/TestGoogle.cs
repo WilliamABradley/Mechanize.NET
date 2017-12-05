@@ -12,7 +12,6 @@
 
 using Mechanize;
 using Mechanize.Forms.Controls;
-using Mechanize.HtmlAgility;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +25,7 @@ namespace Test_Mechanize
     {
         public static async Task Test()
         {
-            using (var browser = new MechanizeBrowser(new HtmlAgilityParser()))
+            using (var browser = new MechanizeBrowser())
             {
                 var page = await browser.NavigateAsync("https://www.google.com/");
                 if (page.IsHtml)

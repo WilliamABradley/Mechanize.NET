@@ -11,29 +11,25 @@
 // ******************************************************************
 
 using HtmlAgilityPack;
-using Mechanize.Html;
 
-namespace Mechanize.HtmlAgility
+namespace Mechanize.Html.HtmlAgility
 {
     /// <summary>
-    /// The Container for <see cref="HtmlDocument"/>.
+    /// Creates a Parser for constructing the <see cref="HtmlAgilityDocument"/> from a string. <para/>
+    /// <see cref="HtmlAgilityDocument"/> is a Container for <see cref="HtmlDocument"/>.
     /// </summary>
-    public class HtmlAgilityDocument : IHtmlDocument
+    public class HtmlAgilityParser : IHtmlParser
     {
-        internal HtmlAgilityDocument(HtmlDocument Document)
+        /// <summary>
+        /// Parses an Html string into a <see cref="HtmlAgilityDocument"/>.
+        /// </summary>
+        /// <param name="Html">Html to Parse</param>
+        /// <returns>The Html Document.</returns>
+        public IHtmlDocument Parse(string Html)
         {
-            this.Document = Document;
-            DocumentNode = new HtmlAgilityNode(Document.DocumentNode);
+            var document = new HtmlDocument();
+            document.LoadHtml(Html);
+            return new HtmlAgilityDocument(document);
         }
-
-        /// <summary>
-        /// The Document's top Node.
-        /// </summary>
-        public IHtmlNode DocumentNode { get; }
-
-        /// <summary>
-        /// The Underlying Document Instance.
-        /// </summary>
-        public readonly HtmlDocument Document;
     }
 }

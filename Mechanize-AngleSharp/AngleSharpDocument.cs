@@ -10,34 +10,29 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
 using Mechanize.Html;
 
-namespace Mechanize.HtmlAgility
+namespace Mechanize.ParseAngleSharp
 {
     /// <summary>
-    /// The Container for <see cref="HtmlAttribute"/>.
+    /// The Container for <see cref="AngleSharp.Dom.Html.IHtmlDocument"/>.
     /// </summary>
-    public class HtmlAgilityAttribute : IHtmlAttribute
+    public class AngleSharpDocument : IHtmlDocument
     {
-        internal HtmlAgilityAttribute(HtmlAttribute Attribute)
+        internal AngleSharpDocument(AngleSharp.Dom.Html.IHtmlDocument Document)
         {
-            this.Attribute = Attribute;
+            this.Document = Document;
+            DocumentNode = new AngleSharpNode(Document.DocumentElement);
         }
 
         /// <summary>
-        /// The Name of the Attribute.
+        /// The Document's top Node.
         /// </summary>
-        public string Name => Attribute.Name;
+        public IHtmlNode DocumentNode { get; }
 
         /// <summary>
-        /// The Value of the Attribute.
+        /// The Underlying Document Instance.
         /// </summary>
-        public string Value => Attribute.Value;
-
-        /// <summary>
-        /// The Underlying Attribute Instance.
-        /// </summary>
-        public readonly HtmlAttribute Attribute;
+        public readonly AngleSharp.Dom.Html.IHtmlDocument Document;
     }
 }

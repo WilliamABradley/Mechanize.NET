@@ -10,27 +10,34 @@
 // THE CODE OR THE USE OR OTHER DEALINGS IN THE CODE.
 // ******************************************************************
 
-using HtmlAgilityPack;
+using AngleSharp.Dom;
 using Mechanize.Html;
 
-namespace Mechanize.HtmlAgility
+namespace Mechanize.ParseAngleSharp
 {
     /// <summary>
-    /// Creates a Parser for constructing the <see cref="HtmlAgilityDocument"/> from a string. <para/>
-    /// <see cref="HtmlAgilityDocument"/> is a Container for <see cref="HtmlDocument"/>.
+    /// The Container for <see cref="IAttr"/>.
     /// </summary>
-    public class HtmlAgilityParser : IHtmlParser
+    public class AngleSharpAttribute : IHtmlAttribute
     {
-        /// <summary>
-        /// Parses an Html string into a <see cref="HtmlAgilityDocument"/>.
-        /// </summary>
-        /// <param name="Html">Html to Parse</param>
-        /// <returns>The Html Document.</returns>
-        public IHtmlDocument Parse(string Html)
+        internal AngleSharpAttribute(IAttr Attribute)
         {
-            var document = new HtmlDocument();
-            document.LoadHtml(Html);
-            return new HtmlAgilityDocument(document);
+            this.Attribute = Attribute;
         }
+
+        /// <summary>
+        /// The Name of the Attribute.
+        /// </summary>
+        public string Name => Attribute.Name;
+
+        /// <summary>
+        /// The Value of the Attribute.
+        /// </summary>
+        public string Value => Attribute.Value;
+
+        /// <summary>
+        /// The Underlying Attribute Instance.
+        /// </summary>
+        public readonly IAttr Attribute;
     }
 }

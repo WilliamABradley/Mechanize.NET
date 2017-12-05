@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mechanize", "Mechanize\Mech
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test-Mechanize", "Test-Mechanize\Test-Mechanize.csproj", "{C0425561-EF16-4A3E-9DEB-D9B379E6D99A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanize-HtmlAgilityPack", "Mechanize-HtmlAgilityPack\Mechanize-HtmlAgilityPack.csproj", "{FD1354C5-3273-4F58-9357-9BBD55D5FB07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mechanize-AngleSharp", "Mechanize-AngleSharp\Mechanize-AngleSharp.csproj", "{EC0D78B3-5DE9-4035-8085-C81E08F128ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{C0425561-EF16-4A3E-9DEB-D9B379E6D99A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0425561-EF16-4A3E-9DEB-D9B379E6D99A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0425561-EF16-4A3E-9DEB-D9B379E6D99A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD1354C5-3273-4F58-9357-9BBD55D5FB07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD1354C5-3273-4F58-9357-9BBD55D5FB07}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD1354C5-3273-4F58-9357-9BBD55D5FB07}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD1354C5-3273-4F58-9357-9BBD55D5FB07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC0D78B3-5DE9-4035-8085-C81E08F128ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC0D78B3-5DE9-4035-8085-C81E08F128ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC0D78B3-5DE9-4035-8085-C81E08F128ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC0D78B3-5DE9-4035-8085-C81E08F128ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

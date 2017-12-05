@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <AssemblyName>Mechanize.NET.HtmlAgilityPack</AssemblyName>
-    <RootNamespace>Mechanize.HtmlAgility</RootNamespace>
+    <RootNamespace>Mechanize.ParseAngleSharp</RootNamespace>
+    <AssemblyName>Mechanize.NET.AngleSharp</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.6.6" />
+    <PackageReference Include="AngleSharp" Version="0.9.9" />
   </ItemGroup>
 
   <ItemGroup>

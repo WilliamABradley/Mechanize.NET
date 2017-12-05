@@ -11,11 +11,10 @@
 // ******************************************************************
 
 using HtmlAgilityPack;
-using Mechanize.Html;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mechanize.HtmlAgility
+namespace Mechanize.Html.HtmlAgility
 {
     /// <summary>
     /// The Container for <see cref="HtmlNode"/>.

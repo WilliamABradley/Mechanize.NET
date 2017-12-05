@@ -30,11 +30,11 @@ namespace Mechanize
         /// <summary>
         /// Constructor for <see cref="MechanizeBrowser"/>.
         /// </summary>
-        /// <param name="HtmlParser">The Parser for Html.</param>
+        /// <param name="HtmlParser">The Parser for Html, defaults to HtmlAgilityParser.</param>
         /// <param name="TimeOut">The Custom Timeout that the Client should wait for concluding that a page has failed to load.</param>
-        public MechanizeBrowser(IHtmlParser HtmlParser, TimeSpan? TimeOut = null)
+        public MechanizeBrowser(IHtmlParser HtmlParser = null, TimeSpan? TimeOut = null)
         {
-            this.HtmlParser = HtmlParser;
+            this.HtmlParser = HtmlParser ?? new Html.HtmlAgility.HtmlAgilityParser();
             this.TimeOut = TimeOut;
         }
 
