@@ -4,6 +4,9 @@
     <TargetFramework>netstandard1.4</TargetFramework>
     <RootNamespace>Mechanize.ParseAngleSharp</RootNamespace>
     <AssemblyName>Mechanize.NET.AngleSharp</AssemblyName>
+    <Title>Mechanize.NET-AngleSharp</Title>
+    <Description>AngleSharp IHtmlParser Extension for Mechanize.NET</Description>
+    <PackageTags>dotnet dotnet-standard analytics spider scaper crawler robots html AngleSharp csharp IHtmlParser Mechanize.NET Mechanize</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
