@@ -7,8 +7,8 @@ Stateful programmatic web browsing, based on Python-Mechanize, which is based on
 
 | NuGet Package Name | Description | Version | Download Count |
 | ------ | ------ | ------ | ------ |
-| [Mechanize.NET]((https://www.nuget.org/packages/Mechanize.NET/)) | Stateful programmatic web browsing, based on Python-Mechanize, which is based on Andy Lester’s Perl module WWW::Mechanize. | [![NuGet](https://img.shields.io/nuget/v/Mechanize.NET.svg)](https://www.nuget.org/packages/Mechanize.NET/) | [![NuGet](https://img.shields.io/nuget/dt/Mechanize.NET.svg)](https://www.nuget.org/packages/Mechanize.NET/) |
-| [Mechanize.NET.AngleSharp]((https://www.nuget.org/packages/Mechanize.NET.AngleSharp/)) | AngleSharp IHtmlParser Extension for Mechanize.NET | [![NuGet](https://img.shields.io/nuget/v/Mechanize.NET.AngleSharp.svg)](https://www.nuget.org/packages/Mechanize.NET.AngleSharp/) | [![NuGet](https://img.shields.io/nuget/dt/Mechanize.NET.AngleSharp.svg)](https://www.nuget.org/packages/Mechanize.NET.AngleSharp/) |
+| [Mechanize.NET](https://www.nuget.org/packages/Mechanize.NET/) | Stateful programmatic web browsing, based on Python-Mechanize, which is based on Andy Lester’s Perl module WWW::Mechanize. | [![NuGet](https://img.shields.io/nuget/v/Mechanize.NET.svg)](https://www.nuget.org/packages/Mechanize.NET/) | [![NuGet](https://img.shields.io/nuget/dt/Mechanize.NET.svg)](https://www.nuget.org/packages/Mechanize.NET/) |
+| [Mechanize.NET.AngleSharp](https://www.nuget.org/packages/Mechanize.NET.AngleSharp/) | AngleSharp IHtmlParser Extension for Mechanize.NET | [![NuGet](https://img.shields.io/nuget/v/Mechanize.NET.AngleSharp.svg)](https://www.nuget.org/packages/Mechanize.NET.AngleSharp/) | [![NuGet](https://img.shields.io/nuget/dt/Mechanize.NET.AngleSharp.svg)](https://www.nuget.org/packages/Mechanize.NET.AngleSharp/) |
 
 By default, `MechanizeBrowser` uses [HtmlAgilityPack](https://www.nuget.org/packages/HtmlAgilityPack/) as the Html Parser. To use other Parsers, such as AngleSharp, change your instantiation to:
 ```c#
