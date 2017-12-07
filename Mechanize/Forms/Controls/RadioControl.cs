@@ -26,6 +26,7 @@ namespace Mechanize.Forms.Controls
     {
         internal RadioControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
+            _Options = new List<ListOption>();
             AddOption(Node);
         }
 

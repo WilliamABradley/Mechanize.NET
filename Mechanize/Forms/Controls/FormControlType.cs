@@ -30,6 +30,11 @@ namespace Mechanize.Forms.Controls
         /// <summary>
         /// Represents a <see cref="TextInputControl"/>.
         /// </summary>
+        Email,
+
+        /// <summary>
+        /// Represents a <see cref="TextInputControl"/>.
+        /// </summary>
         Text,
 
         /// <summary>

@@ -122,8 +122,12 @@ namespace Mechanize.Forms
                 type = GetControlType(typeattr);
                 if (type == FormControlType.Unknown)
                 {
-                    // Pretty much the same as before, but looser.
-                    type = (FormControlType)Enum.Parse(typeof(FormControlType), typeattr, true);
+                    try
+                    {
+                        // Pretty much the same as before, but looser.
+                        type = (FormControlType)Enum.Parse(typeof(FormControlType), typeattr, true);
+                    }
+                    catch { }
                 }
             }
             return type;
@@ -174,6 +178,9 @@ namespace Mechanize.Forms
 
                 case "hidden":
                     return FormControlType.Hidden;
+
+                case "email":
+                    return FormControlType.Email;
 
                 default:
                     return FormControlType.Unknown;

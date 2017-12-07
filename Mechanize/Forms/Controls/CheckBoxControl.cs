@@ -28,6 +28,7 @@ namespace Mechanize.Forms.Controls
     {
         internal CheckBoxControl(HtmlForm Form, IHtmlNode Node) : base(Form, Node)
         {
+            _Options = new List<ListOption>();
             AddOption(Node);
         }
 
