@@ -98,6 +98,7 @@ namespace Mechanize.Forms
                 case FormControlType.TextArea:
                 case FormControlType.Password:
                 case FormControlType.Hidden:
+                case FormControlType.Email:
                     _List.Add(new TextInputControl(this, control));
                     break;
 
