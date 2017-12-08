@@ -42,7 +42,7 @@ using (var browser = new MechanizeBrowser())
 
 | Language | Creators | Name |
 | ------ | ------ | ------ |
-| Perl | Andy Lester | [WWW::Mechanize](http://search.cpan.org/~petdance/WWW-Mechanize/) |
+| Perl | Andy Lester | [WWW::Mechanize](http://search.cpan.org/dist/WWW-Mechanize) |
 | Python | Kovid Goyal | [Python-Mechanize](https://pypi.python.org/pypi/mechanize/) |
 | Ruby | SparkleMotion | [Mechanize](https://github.com/sparklemotion/mechanize) |
 | Java | GistLabs | [Mechanize for Java](https://github.com/GistLabs/mechanize) |
